@@ -56,7 +56,7 @@ public class ChatService {
 	public void createChat(Long darakbangId, ChatCreateRequest chatCreateRequest, DarakbangMember darakbangMember) {
 		Moim moim = findMoimByMoimId(chatCreateRequest.moimId(), darakbangId);
 		if (moim.isNotInDarakbang(darakbangId)) {
-			throw new ChatException(HttpStatus.BAD_REQUEST, ChatErrorMessage.MOIM_NOT_FOUND);
+			throw new ChatException(HttpStatus.NOT_FOUND, ChatErrorMessage.MOIM_NOT_FOUND);
 		}
 		findChamyoByMoimIdAndMemberId(chatCreateRequest.moimId(), darakbangMember.getId());
 
@@ -197,9 +197,9 @@ public class ChatService {
 
 	private Moim findMoimByMoimId(long moimId, long darabangId) {
 		Moim moim = moimRepository.findById(moimId)
-			.orElseThrow(() -> new ChatException(HttpStatus.BAD_REQUEST, ChatErrorMessage.MOIM_NOT_FOUND));
+			.orElseThrow(() -> new ChatException(HttpStatus.NOT_FOUND, ChatErrorMessage.MOIM_NOT_FOUND));
 		if (moim.isNotInDarakbang(darabangId)) {
-			throw new ChatException(HttpStatus.BAD_REQUEST, ChatErrorMessage.MOIM_NOT_FOUND);
+			throw new ChatException(HttpStatus.NOT_FOUND, ChatErrorMessage.MOIM_NOT_FOUND);
 		}
 		return moim;
 	}
