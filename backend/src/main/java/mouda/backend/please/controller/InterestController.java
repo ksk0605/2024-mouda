@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import mouda.backend.config.argumentresolver.LoginDarakbangMember;
 import mouda.backend.darakbangmember.domain.DarakbangMember;
@@ -24,10 +25,10 @@ public class InterestController implements InterestSwagger {
 	@PostMapping
 	public ResponseEntity<Void> updateInterest(
 		@PathVariable Long darakbangId,
-		@LoginDarakbangMember DarakbangMember member,
-		@RequestBody InterestUpdateRequest request
+		@LoginDarakbangMember DarakbangMember darakbangMember,
+		@RequestBody @Valid InterestUpdateRequest request
 	) {
-		interestService.updateInterest(darakbangId, member, request);
+		interestService.updateInterest(darakbangId, darakbangMember, request);
 
 		return ResponseEntity.ok().build();
 	}
