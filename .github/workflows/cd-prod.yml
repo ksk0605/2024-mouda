@@ -3,7 +3,7 @@ name: cd-prod
 on:
   push:
     branches:
-      - develop
+      - deploy
 
 jobs:
   deploy:
@@ -12,4 +12,7 @@ jobs:
     steps:
       - name: deploy
         run: |
-          cd ~/deploy && ./deploy.sh
+          cd ~/deploy
+          sudo rm -rf 2024-mouda
+          git clone https://github.com/woowacourse-teams/2024-mouda.git
+          ./deploy.sh
