@@ -26,23 +26,21 @@ public class InterestService {
 		Please please = pleaseRepository.findById(request.pleaseId())
 			.orElseThrow(() -> new PleaseException(HttpStatus.NOT_FOUND, PleaseErrorMessage.NOT_FOUND));
 		if (please.isNotInDarakbang(darakbangId)) {
-			throw new PleaseException(HttpStatus.BAD_REQUEST, PleaseErrorMessage.PLEASE_NOT_IN_DARAKBANG);
+			throw new PleaseException(HttpStatus.NOT_FOUND, PleaseErrorMessage.PLEASE_NOT_IN_DARAKBANG);
 		}
 
 		if (request.isInterested()) {
-			addInterest(darakbangMember, request.pleaseId());
+			addInterest(darakbangMember, please);
 			return;
 		}
-		removeInterest(darakbangMember, request.pleaseId());
+		removeInterest(darakbangMember, please);
 	}
 
-	private void addInterest(DarakbangMember darakbangMember, Long pleaseId) {
+	private void addInterest(DarakbangMember darakbangMember, Please please) {
 		boolean isInterestExists = interestRepository.existsByDarakbangMemberIdAndPleaseId(darakbangMember.getId(),
-			pleaseId);
+			please.getId());
 
 		if (!isInterestExists) {
-			Please please = pleaseRepository.findById(pleaseId)
-				.orElseThrow(() -> new PleaseException(HttpStatus.NOT_FOUND, PleaseErrorMessage.NOT_FOUND));
 			Interest newInterest = Interest.builder()
 				.darakbangMember(darakbangMember)
 				.please(please)
@@ -51,8 +49,8 @@ public class InterestService {
 		}
 	}
 
-	private void removeInterest(DarakbangMember darakbangMember, Long pleaseId) {
-		interestRepository.findByDarakbangMemberIdAndPleaseId(darakbangMember.getId(), pleaseId)
+	private void removeInterest(DarakbangMember darakbangMember, Please please) {
+		interestRepository.findByDarakbangMemberIdAndPleaseId(darakbangMember.getId(), please.getId())
 			.ifPresent(interestRepository::delete);
 	}
 }
