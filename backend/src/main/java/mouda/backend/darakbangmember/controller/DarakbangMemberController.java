@@ -27,9 +27,10 @@ public class DarakbangMemberController implements DarakbangMemberSwagger {
 	@GetMapping("/{darakbangId}/members")
 	public ResponseEntity<RestResponse<DarakbangMemberResponses>> findAllDarakbangMembers(
 		@PathVariable Long darakbangId,
-		@LoginDarakbangMember DarakbangMember member
+		@LoginDarakbangMember DarakbangMember darakbangMember
 	) {
-		DarakbangMemberResponses responses = darakbangMemberService.findAllDarakbangMembers(darakbangId, member);
+		DarakbangMemberResponses responses = darakbangMemberService.findAllDarakbangMembers(
+			darakbangId, darakbangMember);
 
 		return ResponseEntity.ok(new RestResponse<>(responses));
 	}
