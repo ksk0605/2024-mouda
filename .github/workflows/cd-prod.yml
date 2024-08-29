@@ -3,13 +3,13 @@ name: cd-prod
 on:
   push:
     branches:
-      - develop
+      - check-log
 
 jobs:
   deploy:
     runs-on: prod
 
     steps:
-      - name: deploy
+      - name: springboot log check
         run: |
-          cd ~/deploy && ./deploy.sh
+          cd ~/deploy/2024-mouda/backend && ls && tail -f log.out
