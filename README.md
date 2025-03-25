@@ -79,6 +79,8 @@ Interceptor로 요청 전 토큰을 검증하고, 이후 컨트롤러 단에서 
 초기에는 매 테스트마다 수동으로 DB 초기화를 해줘야 했고, 종종 누락되는 문제가 있었습니다.  
 이를 해결하기 위해 JUnit 5 Extension을 적용하고, 자동 실행되도록 Auto Detection 설정을 추가했습니다.
 
+🔗 관련 PR: [#372 - 데이터베이스 클리너 로직 개선](https://github.com/woowacourse-teams/2024-mouda/pull/372)
+
 📁 주요 코드
 - [`DatabaseCleaner.java`](https://github.com/ksk0605/2024-mouda/blob/develop/backend/src/test/java/mouda/backend/common/config/DatabaseCleaner.java)
 
